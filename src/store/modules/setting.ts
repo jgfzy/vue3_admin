@@ -6,6 +6,8 @@ let useLayoutSettingStore = defineStore("LayoutSettingStore", {
     return {
       //左侧菜单是否折叠
       isfold: false,
+      //刷新按钮：是否刷新
+      refresh: false,
     };
   },
 });

@@ -77,6 +77,9 @@ export const constantRoutes = [
       title: "权限管理",
       icon: "Lock",
     },
+    //当跳转到一级路由时自动转到以及路由下的第一个子路由
+    redirect: "/acl/user",
+    //子路由
     children: [
       {
         name: "acl",
@@ -119,6 +122,7 @@ export const constantRoutes = [
       hidden: false,
       icon: "Goods",
     },
+    redirect: "/product/trademark",
     children: [
       {
         name: "Trademark",
