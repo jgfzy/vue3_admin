@@ -1,11 +1,16 @@
 <template>
   <div class="logo">
-    <img src="../../../public/vite.svg" alt="图片显示失败" />
+    <img src="@/assets/vite.svg" alt="图片显示失败" />
     <p>我的管理系统平台</p>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts" name="Logo"></script>
+<script lang="ts">
+  export default {
+    name: "Logo",
+  };
+</script>
 
 <style scoped lang="scss">
   .logo {

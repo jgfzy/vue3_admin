@@ -3,13 +3,16 @@ import { defineStore } from "pinia";
 import { GET_TOKEN, SET_TOKEN } from "@/utils/token";
 import { reqLogin } from "@/api/user/index";
 import type { loginForm } from "@/api/user/type";
+import { constantRoutes } from "@/router/routes";
 
 let useUserStore = defineStore("User", {
   //仓库
-  state: () => {
+  state() {
     return {
       //存储token：使用本地存储持久化token
       token: GET_TOKEN(),
+      //仓库存储菜单所需要的路由
+      menuRoutes: constantRoutes,
     };
   },
   //方法

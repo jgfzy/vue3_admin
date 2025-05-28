@@ -6,57 +6,78 @@
       <Logo></Logo>
       <!--滚动组件-->
       <el-scrollbar class="el-scrollbar">
-        <el-menu background-color="#001529" text-color="#fff">
-          <el-menu-item index="1">首页</el-menu-item>
-          <el-menu-item index="2">数据大屏</el-menu-item>
-          <!-- 折叠菜单 -->
-          <el-sub-menu index="3">
-            <template #title>
-              <span>权限管理</span>
-            </template>
-            <el-menu-item index="3-1">用户管理</el-menu-item>
-            <el-menu-item index="3-2">角色管理</el-menu-item>
-            <el-menu-item index="3-3">菜单管理</el-menu-item>
-          </el-sub-menu>
+        <el-menu
+          :default-active="$route.path"
+          background-color="#001529"
+          text-color="#fff">
+          <!-- 每一个菜单项 -->
+          <Menu :menuList="userStore.menuRoutes"></Menu>
         </el-menu>
       </el-scrollbar>
     </div>
     <!-- 顶部导航 -->
-    <div class="layout-tabbar"></div>
+    <div class="layout-tabbar">
+      <!-- 顶部导航的tabbar -->
+      <Tabbar></Tabbar>
+    </div>
     <!-- 内容展示区 -->
-    <div class="layout-main"></div>
+    <div class="layout-main">
+      <Main></Main>
+    </div>
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="Layout">
+  //获取路由对象
+  import { useRoute } from "vue-router";
   //引入logo组件
   import Logo from "./logo/index.vue";
   //引入菜单组件
   import Menu from "./menu/index.vue";
+  //引入顶部tabbar
+  import Tabbar from "./tabbar/index.vue";
+  //引入内容展示区组件
+  import Main from "./main/index.vue";
+  //引入仓库
+  import useUserStore from "@/store/modules/user";
+  //使用仓库获取路由信息
+  let userStore = useUserStore();
+  //获取当前路由的信息，用于获取当前路径，为组件设置默认激活菜单
+  let $route = useRoute();
+</script>
+<script lang="ts">
+  export default {
+    name: "Layout",
+  };
 </script>
 
 <style scoped lang="scss">
   .layout-container {
     width: 100%;
     height: 100vh;
-    background-color: orange;
+    background-color: white;
     .layout-sidebar {
+      color: white;
       width: $base-menu-width;
       height: 100vh;
-      background-color: $base-menu-color;
+      background-color: $base-menu-bgc;
       .el-scrollbar {
+        width: 100%;
         height: calc(100vh - $base-tabbar-height);
-        color: white;
+        .el-menu {
+          border-right: none;
+        }
       }
     }
+
     .layout-tabbar {
       position: fixed;
       width: calc(100% - $base-menu-width);
       height: $base-tabbar-height;
-      background-color: cyan;
       top: 0px;
       left: $base-menu-width;
     }
+
     .layout-main {
       position: absolute;
       padding: 20px;
