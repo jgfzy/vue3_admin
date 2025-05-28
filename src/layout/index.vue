@@ -1,7 +1,7 @@
 <template>
   <div class="layout-container">
     <!-- 左侧菜单 -->
-    <div class="layout-sidebar">
+    <div class="layout-sidebar" :class="{ fold: LayoutSettingStore.isfold }">
       <!-- logo组件 -->
       <Logo></Logo>
       <!--滚动组件-->
@@ -9,19 +9,21 @@
         <el-menu
           :default-active="$route.path"
           background-color="#001529"
-          text-color="#fff">
+          text-color="#fff"
+          :collapse="LayoutSettingStore.isfold"
+          :collapse-transition="false">
           <!-- 每一个菜单项 -->
           <Menu :menuList="userStore.menuRoutes"></Menu>
         </el-menu>
       </el-scrollbar>
     </div>
     <!-- 顶部导航 -->
-    <div class="layout-tabbar">
+    <div class="layout-tabbar" :class="{ fold: LayoutSettingStore.isfold }">
       <!-- 顶部导航的tabbar -->
       <Tabbar></Tabbar>
     </div>
     <!-- 内容展示区 -->
-    <div class="layout-main">
+    <div class="layout-main" :class="{ fold: LayoutSettingStore.isfold }">
       <Main></Main>
     </div>
   </div>
@@ -38,10 +40,14 @@
   import Tabbar from "./tabbar/index.vue";
   //引入内容展示区组件
   import Main from "./main/index.vue";
-  //引入仓库
+  //引入用户相关仓库
   import useUserStore from "@/store/modules/user";
-  //使用仓库获取路由信息
+  //使用layout相关仓库获取数据
+  import useLayoutSettingStore from "@/store/modules/setting";
+  //使用用户相关仓库获取路由信息
   let userStore = useUserStore();
+  //获取layout仓库数据
+  let LayoutSettingStore = useLayoutSettingStore();
   //获取当前路由的信息，用于获取当前路径，为组件设置默认激活菜单
   let $route = useRoute();
 </script>
@@ -61,6 +67,10 @@
       width: $base-menu-width;
       height: 100vh;
       background-color: $base-menu-bgc;
+      transition: all 0.3s;
+      &.fold {
+        width: $base-menu-fold-width;
+      }
       .el-scrollbar {
         width: 100%;
         height: calc(100vh - $base-tabbar-height);
@@ -76,6 +86,11 @@
       height: $base-tabbar-height;
       top: 0px;
       left: $base-menu-width;
+      transition: all 0.3s;
+      &.fold {
+        width: calc(100vw - $base-menu-fold-width);
+        left: $base-menu-fold-width;
+      }
     }
 
     .layout-main {
@@ -87,6 +102,11 @@
       left: $base-menu-width;
       top: $base-tabbar-height;
       overflow: auto;
+      transition: all 0.3s;
+      &.fold {
+        width: calc(100vw - $base-menu-fold-width);
+        left: $base-menu-fold-width;
+      }
     }
   }
 </style>

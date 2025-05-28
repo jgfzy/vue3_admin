@@ -9,3 +9,4 @@ let useLayoutSettingStore = defineStore("LayoutSettingStore", {
     };
   },
 });
+export default useLayoutSettingStore;
