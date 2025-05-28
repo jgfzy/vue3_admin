@@ -7,23 +7,20 @@
           class="login-form"
           :model="loginForm"
           :rules="rules"
-          ref="elform"
-        >
+          ref="elform">
           <h1>Hello</h1>
           <h2>欢迎来到我管理系统</h2>
           <el-form-item prop="username">
             <el-input
               :prefix-icon="User"
-              v-model="loginForm.username"
-            ></el-input>
+              v-model="loginForm.username"></el-input>
           </el-form-item>
           <el-form-item prop="password">
             <el-input
               type="password"
               :prefix-icon="Lock"
               :show-password="true"
-              v-model="loginForm.password"
-            ></el-input>
+              v-model="loginForm.password"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button
@@ -45,12 +42,13 @@
   import { Lock, User } from "@element-plus/icons-vue";
   import useUserStore from "@/store/modules/user";
   import { reactive, ref } from "vue";
-  import { useRouter } from "vue-router";
+  import { useRouter, useRoute } from "vue-router";
   import { ElNotification } from "element-plus";
   import { getTime } from "@/utils/time";
   //使用小仓库
-  let useStore = useUserStore();
+  let UseStore = useUserStore();
   let $router = useRouter();
+  let $route = useRoute();
   //收集账号密码
   let isLoading = ref(false);
   let loginForm = reactive({ username: "admin", password: "111111" });
@@ -108,9 +106,10 @@
     //根据promise对象的状态，决定要进行的操作
     try {
       //保证登陆成功
-      await useStore.userLogin(loginForm);
-      //成功后跳转到首页
-      $router.push("/");
+      await UseStore.userLogin(loginForm);
+      //成功后跳转到首页，如果有重定向参数，则跳转到重定向路径，且不可返回
+      let redirect: string = $route.query.redirect as string;
+      $router.replace({ path: redirect || "/" });
       ElNotification({
         type: "success",
         message: "登陆成功",

@@ -29,5 +29,7 @@ app.use(ElementPlus, {
 app.use(router);
 //注册pinia
 app.use(pinia);
+//引入路由鉴权文件
+import "./permission.ts";
 //挂载app
 app.mount("#app");

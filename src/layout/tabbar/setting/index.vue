@@ -4,18 +4,18 @@
     <el-button size="default" icon="Refresh" circle @click="componentRefresh" />
     <el-button size="default" icon="FullScreen" circle @click="fullScreen" />
     <el-button size="default" icon="Setting" circle />
-    <img class="right-img" src="../../../assets/vite.svg" alt="" />
+    <img class="right-img" :src="UserStore.avatar" />
     <!-- 下拉菜单 -->
     <el-dropdown>
       <span class="el-dropdown-link">
-        admin
+        {{ UserStore.username }}
         <el-icon>
           <arrow-down />
         </el-icon>
       </span>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item>退出登录</el-dropdown-item>
+          <el-dropdown-item @click="logOut">退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
@@ -25,7 +25,18 @@
 <script setup lang="ts" name="Setting">
   //使用layout仓库
   import useLayoutSettingStore from "@/store/modules/setting";
+  //使用用户相关仓库
+  import useUserStore from "@/store/modules/user";
+  //引入router
+  import { useRouter } from "vue-router";
+  //引入route
+  import { useRoute } from "vue-router";
+
   let LayoutSettingStore = useLayoutSettingStore();
+  let UserStore = useUserStore();
+  let $router = useRouter();
+  let $route = useRoute();
+
   //当点击刷新按钮时，将改变刷新状态，在main组件中监视数据变化实现组件刷新功能
   function componentRefresh() {
     LayoutSettingStore.refresh = !LayoutSettingStore.refresh;
@@ -43,6 +54,20 @@
       document.exitFullscreen();
     }
   }
+  //用户退出登录的功能
+  function logOut() {
+    //第一件事：向服务器发送请求告诉服务器我已经退出登录[退出登录接口]，
+    //当前token失效，下次登录返回需要返回新的token
+    //第二件事：清空用户相关仓库中用户信息
+    UserStore.userLogOut();
+    //第三件事：跳转到登录页面
+    $router.replace({
+      path: "/login",
+      query: {
+        redirect: $route.path,
+      },
+    });
+  }
 </script>
 <script lang="ts">
   export default {
@@ -55,6 +80,9 @@
     display: flex;
     align-items: center;
     .right-img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
       margin: 0 10px;
     }
   }

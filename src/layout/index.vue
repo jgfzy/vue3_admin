@@ -13,7 +13,7 @@
           :collapse="LayoutSettingStore.isfold"
           :collapse-transition="false">
           <!-- 每一个菜单项 -->
-          <Menu :menuList="userStore.menuRoutes"></Menu>
+          <Menu :menuList="UserStore.menuRoutes"></Menu>
         </el-menu>
       </el-scrollbar>
     </div>
@@ -45,7 +45,7 @@
   //使用layout相关仓库获取数据
   import useLayoutSettingStore from "@/store/modules/setting";
   //使用用户相关仓库获取路由信息
-  let userStore = useUserStore();
+  let UserStore = useUserStore();
   //获取layout仓库数据
   let LayoutSettingStore = useLayoutSettingStore();
   //获取当前路由的信息，用于获取当前路径，为组件设置默认激活菜单

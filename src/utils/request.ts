@@ -1,7 +1,7 @@
 //axios二次封装，设置基础默认配置
 import axios from "axios";
 import { ElMessage } from "element-plus";
-
+import useUserStore from "@/store/modules/user";
 let request = axios.create({
   //基础路径
   baseURL: "http://127.0.0.1:3000",
@@ -9,6 +9,12 @@ let request = axios.create({
 });
 //添加请求拦截器
 request.interceptors.request.use((config) => {
+  //获取用户相关的小仓库，当用户登录成功后，将token携带给服务器
+  let UserStore = useUserStore();
+  if (UserStore.token) {
+    config.headers.token = UserStore.token;
+  }
+
   //返回配置对象
   return config;
 });
