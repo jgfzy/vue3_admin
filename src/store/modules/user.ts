@@ -46,6 +46,11 @@ let useUserStore = defineStore("UserStore", {
         //登录成功后保存用户名、头像等信息
         this.username = result.data.username;
         this.avatar = result.data.avatar;
+        //获取用户信息成功
+        return "ok";
+      } else {
+        //获取用户信息失败
+        return Promise.reject("获取用户信息失败");
       }
     },
     //当用户点击退出登录后的方法
