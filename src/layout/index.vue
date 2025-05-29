@@ -86,6 +86,7 @@
       height: $base-tabbar-height;
       top: 0px;
       left: $base-menu-width;
+      border-bottom: 2px solid black;
       transition: all 0.3s;
       &.fold {
         width: calc(100vw - $base-menu-fold-width);
@@ -98,7 +99,6 @@
       padding: 20px;
       width: calc(100% - $base-menu-width);
       height: calc(100vh - $base-tabbar-height);
-      background-color: yellowgreen;
       left: $base-menu-width;
       top: $base-tabbar-height;
       overflow: auto;

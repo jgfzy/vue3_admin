@@ -49,7 +49,7 @@ router.beforeEach(async (to, from, next) => {
         } catch (error) {
           //获取用户信息失败，说明token过期或用户手动修改本地token
           //此时应退出登录，清除token以及用户相关信息
-          UserStore.userLogOut();
+          await UserStore.userLogOut();
           //退出登录以后，指向登录页进行重新登录
           next({
             path: "/login",

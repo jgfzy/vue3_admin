@@ -1,17 +1,26 @@
 //用户相关接口
 import request from "@/utils/request";
-import type { loginForm, loginResponseData } from "./type";
+import type {
+  loginFormData,
+  loginResponseData,
+  userInfoResponseData,
+} from "./type";
 //统一管理接口
 enum API {
-  LOGIN_URL = "user/login",
-  USERINFO_URL = "user/info",
+  LOGIN_URL = "/user/login",
+  USERINFO_URL = "/user/info",
+  LOGOUT_URL = "/user/logout",
 }
 
-//登录函数
-export function reqLogin(data: loginForm) {
+//post登录请求
+export function reqLogin(data: loginFormData) {
   return request.post<any, loginResponseData>(API.LOGIN_URL, data);
 }
-//用户信息函数
+//get用户信息请求
 export function reqUserInfo(): any {
-  return request.get(API.USERINFO_URL);
+  return request.get<any, userInfoResponseData>(API.USERINFO_URL);
+}
+//post退出登录请求
+export function reqLogout() {
+  return request.post<any, any>(API.LOGOUT_URL);
 }

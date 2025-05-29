@@ -55,12 +55,10 @@
     }
   }
   //用户退出登录的功能
-  function logOut() {
-    //第一件事：向服务器发送请求告诉服务器我已经退出登录[退出登录接口]，
-    //当前token失效，下次登录返回需要返回新的token
-    //第二件事：清空用户相关仓库中用户信息
-    UserStore.userLogOut();
-    //第三件事：跳转到登录页面
+  async function logOut() {
+    //用户退出登录
+    await UserStore.userLogOut();
+    //跳转到登录页面
     $router.replace({
       path: "/login",
       query: {
