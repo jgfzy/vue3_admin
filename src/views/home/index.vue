@@ -9,7 +9,7 @@
   ////获取用户相关仓库
   //import useUserStore from "@/store/modules/user";
   //let UserStore = useUserStore();
-  ////当首页挂载完毕时，说明用户已经成功登录，此时获取用户token
+  ////当首页挂载完毕时,说明用户已经成功登录,此时获取用户token
   //onMounted(() => {
   //  UserStore.getUserInfo();
   //});

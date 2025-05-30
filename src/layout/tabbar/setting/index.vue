@@ -37,13 +37,13 @@
   let $router = useRouter();
   let $route = useRoute();
 
-  //当点击刷新按钮时，将改变刷新状态，在main组件中监视数据变化实现组件刷新功能
+  //当点击刷新按钮时,将改变刷新状态,在main组件中监视数据变化实现组件刷新功能
   function componentRefresh() {
     LayoutSettingStore.refresh = !LayoutSettingStore.refresh;
   }
-  //全屏的功能，使用原生DOM实现
+  //全屏的功能,使用原生DOM实现
   function fullScreen() {
-    //DOM对象的一个属性，判断当前是否处于全屏状态: false | true
+    //DOM对象的一个属性,判断当前是否处于全屏状态: false | true
     let isFullScreen = document.fullscreenElement;
     //进行判断实现全屏切换
     if (!isFullScreen) {

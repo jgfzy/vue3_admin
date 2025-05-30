@@ -48,7 +48,7 @@
   let UserStore = useUserStore();
   //获取layout仓库数据
   let LayoutSettingStore = useLayoutSettingStore();
-  //获取当前路由的信息，用于获取当前路径，为组件设置默认激活菜单
+  //获取当前路由的信息,用于获取当前路径,为组件设置默认激活菜单
   let $route = useRoute();
 </script>
 <script lang="ts">

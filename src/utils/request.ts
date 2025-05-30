@@ -1,4 +1,4 @@
-//axios二次封装，设置基础默认配置
+//axios二次封装,设置基础默认配置
 import axios from "axios";
 import { ElMessage } from "element-plus";
 import useUserStore from "@/store/modules/user";
@@ -9,7 +9,7 @@ let request = axios.create({
 });
 //添加请求拦截器
 request.interceptors.request.use((config) => {
-  //获取用户相关的小仓库，当用户登录成功后，将token携带给服务器
+  //获取用户相关的小仓库,当用户登录成功后,将token携带给服务器
   let UserStore = useUserStore();
   if (UserStore.token) {
     config.headers.token = UserStore.token;
@@ -24,7 +24,7 @@ request.interceptors.response.use(
     return response.data;
   },
   (error) => {
-    //定义一个变量，存储错误信息
+    //定义一个变量,存储错误信息
     let message = "";
 
     // 检查 error.response 是否存在
@@ -53,7 +53,7 @@ request.interceptors.response.use(
       message = `请求发生错误: ${error.message}`;
     }
     //使用组件提示错误信息
-    ElMessage: ({
+    ElMessage({
       type: "error",
       message,
     });

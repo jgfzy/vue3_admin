@@ -21,7 +21,7 @@ const app = createApp(App);
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);
 }
-//使用插件，配置中文语言
+//使用插件,配置中文语言
 app.use(ElementPlus, {
   locale: zhCn,
 });

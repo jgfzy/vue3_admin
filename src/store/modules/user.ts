@@ -30,7 +30,7 @@ let useUserStore = defineStore("UserStore", {
     //用户点击按钮发送登录请求
     async userLogin(data: loginFormData) {
       let result: loginResponseData = await reqLogin(data);
-      //如果登录成功，code为200
+      //如果登录成功,code为200
       if (result.code == 200) {
         //pinia仓库存储token
         this.token = result.data;
@@ -39,7 +39,7 @@ let useUserStore = defineStore("UserStore", {
         //如果登录成功返回一个成功的promise对象
         return "ok";
       } else {
-        //如果失败，返回一个失败的promise对象
+        //如果失败,返回一个失败的promise对象
         return Promise.reject(new Error(result.data));
       }
     },
@@ -61,11 +61,11 @@ let useUserStore = defineStore("UserStore", {
     },
     //当用户点击退出登录后的方法
     async userLogOut() {
-      //第一件事：向服务器发送请求告诉服务器我已经退出登录[退出登录接口]，
+      //第一件事：向服务器发送请求告诉服务器我已经退出登录[退出登录接口],
       let result: any = await reqLogout();
       if (result.code == 200) {
         //第二件事：清空用户相关仓库中用户信息以及本地存储的token
-        //当前token失效，下次登录返回需要返回新的token
+        //当前token失效,下次登录返回需要返回新的token
         this.token = "";
         this.username = "";
         this.avatar = "";
