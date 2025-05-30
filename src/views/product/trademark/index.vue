@@ -38,7 +38,16 @@
               icon="Edit"
               @click="updateItem(row)">
             </el-button>
-            <el-button type="danger" size="small" icon="Delete"> </el-button>
+
+            <el-popconfirm
+              :title="`你确定要删除${row.tmName}吗?`"
+              width="250px"
+              @confirm="removeTrademark(row.id)">
+              <template #reference>
+                <el-button type="danger" size="small" icon="Delete">
+                </el-button>
+              </template>
+            </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
@@ -60,8 +69,8 @@
         @current-change="onPageChange"
         v-model:current-page="currentPageNuber"
         v-model:page-size="pageSizeLimit"
-        :page-sizes="[3, 5, 7, 9]"
-        :pager-count="9"
+        :page-sizes="[2, 4, 6, 8, 10, 12, 14, 16, 18, 20]"
+        :pager-count="11"
         :small="false"
         :background="true"
         layout=" prev, pager, next, jumper,->,total, sizes"
@@ -90,9 +99,15 @@
         </el-form-item>
         <!-- 第二个输入框 -->
         <el-form-item label="品牌名称" label-width="80px">
-          <p>{{ fileName }}----{{ trademarkParams.logoUrl }}</p>
+          <p>{{ fileName }} || {{ trademarkParams.logoUrl }}</p>
         </el-form-item>
         <!-- 第三个输入框 -->
+        <el-form-item label="品牌logo" label-width="80px">
+          <el-input
+            placeholder="请输入品牌logo"
+            v-model="trademarkParams.logoUrl"></el-input>
+        </el-form-item>
+        <!-- 第四个输入框 -->
         <el-form-item label="品牌图标" label-width="80px" prop="logoUrl">
           <!--
 					action						请求的url地址
@@ -121,10 +136,10 @@
       </el-form>
       <!-- 对话框底部选项按钮footer使用具名插槽 -->
       <template #footer>
-        <el-button type="primary" size="dafault" @click="cancel">
+        <el-button type="primary" size="default" @click="cancel">
           取消
         </el-button>
-        <el-button type="primary" size="dafault" @click="confirm">
+        <el-button type="primary" size="default" @click="confirm">
           确定
         </el-button>
       </template>
@@ -137,6 +152,7 @@
   import {
     reqProudctTrademark,
     reqAddOrUpdateTrademark,
+    reqDeleteTrademark,
   } from "@/api/product/trademark";
   //引入ts类型
   import type {
@@ -148,7 +164,7 @@
   //当前页码
   let currentPageNuber = ref<number>(1);
   //每一页展示多少条数据
-  let pageSizeLimit = ref<number>(9);
+  let pageSizeLimit = ref<number>(12);
   //存储已有数据的总条数
   let total = ref<number>(0);
   //存储已有请求到的全部数据
@@ -303,9 +319,30 @@
     //当文件上传成功后应清除表单验证的提示信息
     elFormRef.value.clearValidate();
   }
+  //当文件列表点击移除文件时触发的钩子
   function onFileRemoved() {
     fileName.value = "";
     trademarkParams.logoUrl = "";
+  }
+  //气泡确认框点击确定按钮触发的事件
+  async function removeTrademark(id: number) {
+    //调用删除接口，并将id参数传入
+    let result = await reqDeleteTrademark(id);
+    if (result.code == 200) {
+      //如果删除成功，提示信息
+      ElMessage({
+        type: "success",
+        message: "删除成功",
+      });
+      //再次获取已有数据的信息
+      getTrademarkInfo();
+    } else {
+      //如果删除失败，提示信息
+      ElMessage({
+        type: "error",
+        message: "删除失败",
+      });
+    }
   }
   //组件一挂载完毕就发一次请求
   onMounted(() => {

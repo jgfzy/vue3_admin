@@ -10,6 +10,8 @@ enum API {
   ADDTRADEMARK_URL = "/product/trademark/save",
   //修改品牌的接口
   UPDATETRADEMARK_URL = "/product/trademark/update",
+  //删除已有品牌的接口
+  DELETE_URL = "/product/trademark/remove/",
 }
 //获取已有品牌接口的方法
 //page:获取第几页
@@ -19,6 +21,7 @@ export function reqProudctTrademark(page: number, limit: number) {
     API.TRADEMARK_URL + `?page=${page}&limit=${limit}`,
   );
 }
+//添加与修改数据的请求接口
 export function reqAddOrUpdateTrademark(data: trademark) {
   //如果数据有id,那就是修改品牌的数据
   if (data.id) {
@@ -27,4 +30,8 @@ export function reqAddOrUpdateTrademark(data: trademark) {
     //添加品牌
     return request.post<any, any>(API.ADDTRADEMARK_URL, data);
   }
+}
+//删除数据的请求接口
+export function reqDeleteTrademark(id: number) {
+  return request.delete<any, any>(API.DELETE_URL + id);
 }
