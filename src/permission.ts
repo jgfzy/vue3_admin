@@ -18,7 +18,7 @@ let UserStore = useUserStore(pinia);
 
 //全局守卫：项目中任意路由切换都会触发的钩子
 //全局前置守卫：访问某一个路由之前触发的钩子
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to, _from, next) => {
   //to；你将要访问哪一个路由
   //from；你从哪个路由来
   //next()；路由放行
@@ -73,7 +73,7 @@ router.beforeEach(async (to, from, next) => {
   //next();
 });
 //全局后置守卫：访问某一个路由之后触发的钩子
-router.afterEach((to, from) => {
+router.afterEach((to) => {
   document.title = settings.logoTitle + " - " + to.meta.title;
   //进度条结束
   nprogress.done();
